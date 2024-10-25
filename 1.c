@@ -44,29 +44,40 @@
 // }
 
 #include <stdio.h>
-#include <string.h>
 
-void main()
+int main()
 {
     FILE *p1;
     FILE *p2;
 
+    // Open the files in write mode and check for success
     p1 = fopen("odd.txt", "a");
     p2 = fopen("evan.txt", "a");
+    if (p1 == NULL || p2 == NULL)
+    {
+        printf("Error opening file!\n");
+        return 1;
+    }
 
+    // Loop through the range and write to the appropriate files
     for (int i = 50; i <= 70; i++)
     {
+        char buffer[10];
+        sprintf(buffer, "%d\n", i); // Convert integer to string format
+
         if (i % 2 != 0)
         {
-            char odd[100];
-            odd[i] = i;
-            fputs(odd, p1);
+            fputs(buffer, p1); // Write odd number to odd.txt
         }
         else
         {
-            char evan[100];
-            evan[i] = i;
-            fputs(evan, p2);
+            fputs(buffer, p2); // Write even number to evan.txt
         }
     }
+
+    // Close files
+    fclose(p1);
+    fclose(p2);
+
+    return 0;
 }
